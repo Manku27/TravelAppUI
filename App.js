@@ -1,19 +1,17 @@
-import {
-  StyleSheet,
-  SafeAreaView,
-  Text,
-  View,
-  Platform,
-  StatusBar,
-} from "react-native";
+import { StatusBar as ExpoStatusBar } from "expo-status-bar";
+import React from "react";
 import { ThemeProvider } from "styled-components/native";
-import { theme } from "./src/infrastructure/theme";
-// fonts
+
 import {
   useFonts as useOswald,
   Oswald_400Regular,
 } from "@expo-google-fonts/oswald";
 import { useFonts as useLato, Lato_400Regular } from "@expo-google-fonts/lato";
+
+import { theme } from "./src/infrastructure/theme";
+import { Navigation } from "./src/infrastructure/navigation";
+
+import { AuthenticationContextProvider } from "./src/services/authentication/authentication.context";
 
 export default function App() {
   const [oswaldLoaded] = useOswald({
@@ -31,22 +29,11 @@ export default function App() {
   return (
     <>
       <ThemeProvider theme={theme}>
-        <SafeAreaView style={styles.parentContainer}>
-          <View style={styles.container}>
-            <Text>Hello World</Text>
-          </View>
-        </SafeAreaView>
+        <AuthenticationContextProvider>
+          <Navigation />
+        </AuthenticationContextProvider>
       </ThemeProvider>
+      <ExpoStatusBar style="auto" />
     </>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  parentContainer: { flex: 1, marginTop: StatusBar.currentHeight },
-});
