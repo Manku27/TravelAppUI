@@ -16,8 +16,6 @@ const AvatarContainer = styled.View`
 `;
 
 export const SettingsScreen = ({ navigation }) => {
-  const { isAuthenticated, onLogout, user } = useContext(AuthenticationContext);
-
   return (
     <SafeArea>
       <AvatarContainer>
@@ -26,43 +24,20 @@ export const SettingsScreen = ({ navigation }) => {
           <Text variant="label">{user?.email || "not available"}</Text>
         </Spacer>
       </AvatarContainer>
-      {/* TODO : check for a better way for auth naviagtion */}
-      {isAuthenticated ? (
-        <List.Section>
-          <SettingsItem
-            title="Bookings"
-            description="View your bookings"
-            left={(props) => (
-              <List.Icon {...props} color="black" icon="heart" />
-            )}
-            onPress={() => navigation.navigate("Bookings")}
-          />
-          <SettingsItem
-            title="Logout"
-            left={(props) => <List.Icon {...props} color="black" icon="door" />}
-            onPress={onLogout}
-          />
-        </List.Section>
-      ) : (
-        <List.Section>
-          <SettingsItem
-            title="Login"
-            description="Login"
-            left={(props) => (
-              <List.Icon {...props} color="black" icon="login" />
-            )}
-            onPress={() => navigation.navigate("Login")}
-          />
-          <SettingsItem
-            title="Register"
-            description="Register"
-            left={(props) => (
-              <List.Icon {...props} color="black" icon="account-plus" />
-            )}
-            onPress={() => navigation.navigate("Registration")}
-          />
-        </List.Section>
-      )}
+
+      <List.Section>
+        <SettingsItem
+          title="Bookings"
+          description="View your bookings"
+          left={(props) => <List.Icon {...props} color="black" icon="heart" />}
+          onPress={() => navigation.navigate("Bookings")}
+        />
+        <SettingsItem
+          title="Logout"
+          left={(props) => <List.Icon {...props} color="black" icon="door" />}
+          onPress={onLogout}
+        />
+      </List.Section>
     </SafeArea>
   );
 };

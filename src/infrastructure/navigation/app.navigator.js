@@ -6,6 +6,8 @@ import { BoatsNavigator } from "./boats.navigator";
 import { SettingsNavigator } from "./settings.navigator";
 import { Text } from "react-native-paper";
 
+import { BoatsContextProvider } from "../../services/boats/boats.context";
+
 const Tab = createBottomTabNavigator();
 
 const TAB_ICON = {
@@ -27,15 +29,22 @@ const SampleComponent = ({ navigation }) => {
   return <Text>FAQ</Text>;
 };
 export const AppNavigator = () => (
-  <Tab.Navigator
-    screenOptions={createScreenOptions}
-    tabBarOptions={{
-      activeTintColor: "tomato",
-      inactiveTintColor: "gray",
-    }}
-  >
-    <Tab.Screen name="Boats" component={BoatsNavigator} />
-    <Tab.Screen name="FAQ" component={SampleComponent} />
-    <Tab.Screen name="Settings" component={SettingsNavigator} />
-  </Tab.Navigator>
+  <BoatsContextProvider>
+    <Tab.Navigator
+      screenOptions={createScreenOptions}
+      // TODO: deprecated
+      tabBarOptions={{
+        activeTintColor: "tomato",
+        inactiveTintColor: "gray",
+      }}
+    >
+      <Tab.Screen name="Boats" component={BoatsNavigator} />
+      <Tab.Screen name="FAQ" component={SampleComponent} />
+      <Tab.Screen
+        name="Settings"
+        component={SettingsNavigator}
+        options={{ headerShown: false }}
+      />
+    </Tab.Navigator>
+  </BoatsContextProvider>
 );
