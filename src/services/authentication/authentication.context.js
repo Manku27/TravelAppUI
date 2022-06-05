@@ -9,7 +9,7 @@ export const AuthenticationContextProvider = ({ children }) => {
 
   const onLogin = (email, password) => {
     setIsLoading(true);
-    setUser({});
+    setUser(user);
   };
 
   const onRegister = (email, password, repeatedPassword) => {
@@ -18,7 +18,7 @@ export const AuthenticationContextProvider = ({ children }) => {
       setError("Error: Passwords do not match");
       return;
     }
-    setUser({});
+    setUser(user);
   };
 
   const onLogout = () => {

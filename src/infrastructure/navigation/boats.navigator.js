@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 
 import {
   createStackNavigator,
   TransitionPresets,
 } from "@react-navigation/stack";
 import { Text } from "react-native-paper";
+import { AuthenticationContext } from "../../services/authentication/authentication.context";
 
 const BoatStack = createStackNavigator();
 const SampleComponentBoats = ({ navigation }) => {
@@ -23,6 +24,8 @@ const SampleComponentRegister = ({ navigation }) => {
   return <Text>Register</Text>;
 };
 export const BoatsNavigator = () => {
+  const { isAuthenticated } = useContext(AuthenticationContext);
+
   return (
     <BoatStack.Navigator
       screenOptions={{
@@ -35,12 +38,21 @@ export const BoatsNavigator = () => {
         name="BoatDetail"
         component={SampleComponentBoatDetail}
       />
-      <BoatStack.Screen
-        name="BoatBooking"
-        component={SampleComponentBoatBooking}
-      />
-      <BoatStack.Screen name="Login" component={SampleComponentLogin} />
-      <BoatStack.Screen name="Register" component={SampleComponentRegister} />
+
+      {isAuthenticated ? (
+        <BoatStack.Screen
+          name="BoatBooking"
+          component={SampleComponentBoatBooking}
+        />
+      ) : (
+        <>
+          <BoatStack.Screen name="Login" component={SampleComponentLogin} />
+          <BoatStack.Screen
+            name="Register"
+            component={SampleComponentRegister}
+          />
+        </>
+      )}
     </BoatStack.Navigator>
   );
 };
